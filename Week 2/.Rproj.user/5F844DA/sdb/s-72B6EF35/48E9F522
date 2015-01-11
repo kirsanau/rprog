@@ -1,0 +1,17 @@
+{
+    "contents" : "complete <- function(directory, id = 1:332) {\n    ## 'directory' is a character vector of length 1 indicating\n    ## the location of the CSV files\n    \n    ## 'id' is an integer vector indicating the monitor ID numbers\n    ## to be used\n    \n    ## Return a data frame of the form:\n    ## id nobs\n    ## 1  117\n    ## 2  1041\n    ## ...\n    ## where 'id' is the monitor ID number and 'nobs' is the\n    ## number of complete cases\n    #directory = \"specdata\"\n    #id= 1:3\n    \n    files = list()\n    for(i in id){\n        if(i<10){\n            files = c(files,paste(directory,\"/\",\"00\",i,\".csv\",sep=\"\")) \n        }\n        else if (i<100){\n            files = c(files,paste(directory,\"/\",\"0\",i,\".csv\",sep=\"\")) \n        }\n        else {\n            files = c(files,paste(directory,\"/\",i,\".csv\",sep=\"\")) \n        }\n    }\n    \n    myfiles = lapply(files, read.csv, header = TRUE)\n    nobs_final = data.frame()\n\n    for (i in 1:length (myfiles)){\n        nobs_raw = myfiles[i]\n        for (j in nobs_raw){\n            nobs_raw1 = j[!is.na(j$sulfate) & !is.na(j$nitrate),]\n\n        }\n        obs_id = nobs_raw[[1]]\n\n        nobs_final <- rbind (nobs_final, data.frame(id = obs_id[1,4], nobs = nrow(nobs_raw1)))\n    }\n    \n    nobs_final\n    \n\n}",
+    "created" : 1421004415069.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "597421592",
+    "id" : "48E9F522",
+    "lastKnownWriteTime" : 1421004587,
+    "path" : "C:/Business/Altasapiens/R/Coursera/R programming/Week 2/complete.R",
+    "project_path" : "complete.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
